@@ -8,14 +8,14 @@ interface LeaderboardProps {
 }
 
 const fakeLeaderboard = [
-  { name: 'TamilTiger_23', score: 850, avatar: '🦁' },
-  { name: 'MaduraiKing', score: 720, avatar: '👑' },
-  { name: 'BullWhisperer', score: 680, avatar: '🐂' },
-  { name: 'PongalPride', score: 550, avatar: '🌾' },
-  { name: 'NandiRider', score: 500, avatar: '⚡' },
-  { name: 'VaadiVaasal', score: 450, avatar: '🚪' },
-  { name: 'KangayamFan', score: 400, avatar: '🏆' },
-  { name: 'ArenaMaster', score: 350, avatar: '🎯' },
+  { name: 'TamilTiger_23', score: 680, avatar: '🦁' },
+  { name: 'MaduraiKing', score: 620, avatar: '👑' },
+  { name: 'BullWhisperer', score: 540, avatar: '🐂' },
+  { name: 'PongalPride', score: 470, avatar: '🌾' },
+  { name: 'NandiRider', score: 410, avatar: '⚡' },
+  { name: 'VaadiVaasal', score: 350, avatar: '🚪' },
+  { name: 'KangayamFan', score: 290, avatar: '🏆' },
+  { name: 'ArenaMaster', score: 220, avatar: '🎯' },
 ]
 
 export default function Leaderboard({ userScore, sessionStats }: LeaderboardProps) {

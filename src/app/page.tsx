@@ -13,6 +13,7 @@ import CulturalStories from '@/components/CulturalStories'
 import Header from '@/components/Header'
 import AgentPanel from '@/components/AgentPanel'
 import AgentArchitecture from '@/components/AgentArchitecture'
+import GameOver from '@/components/GameOver'
 
 interface AgentState {
   commentary: AgentResponse | null
@@ -43,6 +44,8 @@ export default function Home() {
   const [agentLoading, setAgentLoading] = useState(false)
   const [hasAI, setHasAI] = useState(false)
   const [sessionStats, setSessionStats] = useState(PersistentMemory.loadSessionStats())
+  const [gameOver, setGameOver] = useState(false)
+  const [cheerStreak, setCheerStreak] = useState(0)
 
   useEffect(() => {
     setRounds(generateRounds())
@@ -157,6 +160,16 @@ export default function Home() {
         setUserScore(prev => prev + 100)
         setCrowdEnergy(prev => Math.min(100, prev + 15))
       }
+
+      // Bonus for cheering during the round
+      setCheerStreak(prev => {
+        if (prev >= 5) setUserScore(s => s + 50) // cheer bonus
+        if (prev >= 10) setUserScore(s => s + 50) // super cheer bonus
+        return 0
+      })
+
+      // Participation points for watching
+      setUserScore(prev => prev + 25)
       PersistentMemory.recordPrediction(isCorrect)
       PersistentMemory.recordRound()
 
@@ -177,12 +190,17 @@ export default function Home() {
         body: JSON.stringify({ phase: 'post_run', action: { type: 'round_complete' } }),
       })
 
-      // Show trivia between rounds
+      // Show trivia or game over
       if (currentRound < rounds.length - 1) {
         setTimeout(() => {
           setShowTrivia(true)
           setTriviaIndex(prev => (prev + 1) % triviaQuestions.length)
         }, 2500)
+      } else {
+        // Last round — show game over after a delay
+        setTimeout(() => {
+          setGameOver(true)
+        }, 3000)
       }
     }, 3000)
   }, [currentRound, isSimulating, predictions, rounds, callAgents])
@@ -220,6 +238,14 @@ export default function Home() {
 
   const handleCheer = () => {
     setCrowdEnergy(prev => Math.min(100, prev + 3))
+    setCheerStreak(prev => prev + 1)
+    // Every 5th cheer gives bonus points
+    setCheerStreak(prev => {
+      if (prev > 0 && prev % 5 === 0) {
+        setUserScore(s => s + 10)
+      }
+      return prev
+    })
     PersistentMemory.recordCheer()
     // Notify agents of cheer
     fetch('/api/agents/orchestrate', {
@@ -231,6 +257,18 @@ export default function Home() {
 
   const handleAgentFeedback = (agentId: string, rating: 'helpful' | 'not_helpful') => {
     PersistentMemory.saveFeedback({ agentId, rating, timestamp: Date.now() })
+  }
+
+  const handleReplay = () => {
+    setRounds(generateRounds())
+    setCurrentRound(0)
+    setUserScore(0)
+    setPredictions({})
+    setCrowdEnergy(60)
+    setGameOver(false)
+    setCheerStreak(0)
+    setAgentState({ commentary: null, prediction: null, sentiment: null, personalization: null })
+    setOrchestratorDecision('')
   }
 
   // Persist high score on change
@@ -332,6 +370,16 @@ export default function Home() {
         <TriviaModal
           question={triviaQuestions[triviaIndex]}
           onAnswer={handleTriviaAnswer}
+        />
+      )}
+
+      {gameOver && (
+        <GameOver
+          rounds={rounds}
+          userScore={userScore}
+          predictions={predictions}
+          sessionStats={sessionStats}
+          onReplay={handleReplay}
         />
       )}
     </main>
