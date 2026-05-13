@@ -7,9 +7,10 @@ interface LiveArenaProps {
   round: Round
   isSimulating: boolean
   onStartRound: () => void
+  hasPrediction?: boolean
 }
 
-export default function LiveArena({ round, isSimulating, onStartRound }: LiveArenaProps) {
+export default function LiveArena({ round, isSimulating, onStartRound, hasPrediction }: LiveArenaProps) {
   const [timer, setTimer] = useState(0)
 
   useEffect(() => {
@@ -109,12 +110,19 @@ export default function LiveArena({ round, isSimulating, onStartRound }: LiveAre
 
       {/* Action Button */}
       {round.status === 'active' && !isSimulating && !round.result && (
-        <button
-          onClick={onStartRound}
-          className="w-full py-3 rounded-xl bg-gradient-to-r from-saffron to-temple text-white font-bold text-sm hover:opacity-90 transition-all glow-saffron active:scale-95"
-        >
-          🚪 Open Vaadi Vaasal — Start the Run!
-        </button>
+        hasPrediction ? (
+          <button
+            onClick={onStartRound}
+            className="w-full py-3 rounded-xl bg-gradient-to-r from-saffron to-temple text-white font-bold text-sm hover:opacity-90 transition-all glow-saffron active:scale-95"
+          >
+            🚪 Open Vaadi Vaasal — Start the Run!
+          </button>
+        ) : (
+          <div className="w-full py-3 rounded-xl border-2 border-dashed border-saffron/40 text-center">
+            <p className="text-sm text-saffron font-semibold animate-pulse">👆 Make your prediction above first!</p>
+            <p className="text-xs text-white/40 mt-1">Pick Bull or Tamer to unlock the round</p>
+          </div>
+        )
       )}
 
       {/* Simulation Running */}

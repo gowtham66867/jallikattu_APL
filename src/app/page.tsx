@@ -321,18 +321,20 @@ export default function Home() {
             hasAI={hasAI}
           />
 
-          <LiveArena
-            round={rounds[currentRound]}
-            isSimulating={isSimulating}
-            onStartRound={simulateRound}
-          />
-
+          {/* Prediction FIRST — user must predict before starting */}
           <PredictionPanel
             round={rounds[currentRound]}
             roundIndex={currentRound}
             prediction={predictions[currentRound]}
             onPredict={handlePrediction}
             isSimulating={isSimulating}
+          />
+
+          <LiveArena
+            round={rounds[currentRound]}
+            isSimulating={isSimulating}
+            onStartRound={simulateRound}
+            hasPrediction={!!predictions[currentRound]}
           />
 
           <CrowdEnergy
