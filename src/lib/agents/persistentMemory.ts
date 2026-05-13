@@ -55,12 +55,12 @@ const defaultStats: SessionStats = {
 }
 
 function safeGet<T>(key: string, fallback: T): T {
-  if (typeof window === 'undefined') return fallback
+  if (typeof window === 'undefined') return JSON.parse(JSON.stringify(fallback))
   try {
     const stored = localStorage.getItem(key)
-    return stored ? JSON.parse(stored) : fallback
+    return stored ? JSON.parse(stored) : JSON.parse(JSON.stringify(fallback))
   } catch {
-    return fallback
+    return JSON.parse(JSON.stringify(fallback))
   }
 }
 
