@@ -222,6 +222,57 @@ Open **http://localhost:3000**
 
 ---
 
+## 🎮 How to Play
+
+### Getting Started
+
+1. **Open the app** — Visit [the live demo](https://jallikattu-live-1027882324647.us-central1.run.app) or run locally at `http://localhost:3000`
+2. The game loads with **6 rounds** of Jallikattu bull runs, each featuring a unique bull and tamer matchup
+
+### Gameplay Loop (Each Round)
+
+| Step | What You Do | Points |
+|------|-------------|--------|
+| **1. Study the matchup** | View the bull's breed, aggression, speed, and past wins vs. the tamer's experience and success rate | — |
+| **2. Make your prediction** | Choose **"Bull Wins"** or **"Tamer Wins"** before the run starts | — |
+| **3. Cheer during the run** | Tap the cheer buttons to boost crowd energy while the 3-second simulation plays out | +10 pts every 5 cheers |
+| **4. See the result** | The round resolves — did you predict correctly? | +100 pts if correct |
+| **5. Answer trivia** | A cultural trivia question appears between rounds | +50 pts if correct |
+| **6. Next round** | Move to the next matchup — AI agents adapt to your play style | +25 pts participation |
+
+### Scoring System
+
+- **Correct prediction**: +100 points
+- **Trivia correct answer**: +50 points
+- **Round participation**: +25 points
+- **Cheer streak (every 5 cheers)**: +10 points
+- **Cheer streak bonus (5+ during a round)**: +50 points
+- **Super cheer bonus (10+ during a round)**: +50 points
+
+### AI Agents Working For You
+
+While you play, **4 AI agents** run in real-time (visible in the Agent Panel):
+
+- **🎙️ Commentary Agent** — Provides dramatic Tamil/English narration of each run
+- **📊 Prediction Agent** — Shows AI-calculated odds with multi-factor reasoning
+- **📣 Sentiment Agent** — Reacts to your cheering; triggers crowd events like "Thunder Clap" at high energy
+- **🎯 Personalization Agent** — Adapts trivia difficulty and content based on your performance
+
+### Tabs & Features
+
+- **Arena** — Main game view with bull/tamer cards, predictions, and crowd energy
+- **Culture** — Expandable cultural heritage stories about Jallikattu traditions
+- **Leaderboard** — Your lifetime stats: total sessions, accuracy %, streak, and high score
+
+### Tips
+
+- Check the **Prediction Agent's reasoning** before making your pick — it shows breed advantages and fatigue analysis
+- **Cheer actively** during the run to earn bonus points and trigger crowd events
+- Your stats **persist across sessions** — come back to beat your high score
+- The game works **with or without** a Gemini API key — without it, agents use intelligent rule-based fallbacks
+
+---
+
 ## ☁️ Cloud Run Deployment
 
 **Live at**: [https://jallikattu-live-1027882324647.us-central1.run.app](https://jallikattu-live-1027882324647.us-central1.run.app)
